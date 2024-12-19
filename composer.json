@@ -1,0 +1,30 @@
+{
+    "name": "callmeaf/address",
+    "description": "Manage User Addresses",
+    "type": "library",
+    "require": {
+        "callmeaf/base": "dev-master",
+        "callmeaf/user": "dev-master",
+        "callmeaf/geography": "dev-master"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Callmeaf\\Address\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "alikhoshkar",
+            "email": "alikhoshkar2000@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Callmeaf\\Address\\CallmeafAddressServiceProvider"
+            ]
+        }
+    }
+}
