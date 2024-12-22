@@ -2,7 +2,6 @@
 
 namespace Callmeaf\Address\Events;
 
-use Callmeaf\User\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Pagination\LengthAwarePaginator;
