@@ -26,9 +26,13 @@ class AddressController extends ApiController
     protected AddressResources $addressResources;
     public function __construct()
     {
-        app(config('callmeaf-address.middlewares.address'))($this);
         $this->addressService = app(config('callmeaf-address.service'));
         $this->addressResources = app(config('callmeaf-address.resources.address'));
+    }
+
+    public static function middleware(): array
+    {
+        return app(config('callmeaf-address.middlewares.address'))();
     }
 
     public function index(AddressIndexRequest $request)
