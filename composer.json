@@ -11,7 +11,10 @@
     "autoload": {
         "psr-4": {
             "Callmeaf\\Address\\": "src/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "authors": [
         {

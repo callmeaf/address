@@ -19,6 +19,11 @@ class AddressResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        [
+            $addressable,
+            $addressableClass,
+            $addressableConfigName,
+        ] = addressableResourceData(address: $this->resource);
         return toArrayResource(data: [
             'id' => fn() => $this->id,
             'status' => fn() => $this->status,
@@ -30,7 +35,7 @@ class AddressResource extends JsonResource
             'full_name' => fn() => $this->full_name,
             'mobile' => fn() => $this->mobile,
             'email' => fn() => $this->email,
-            'delivery_code' => fn() => $this->delivery_code,
+            'is_default' => fn() => $this->is_default,
             'national_code' => fn() => $this->national_code,
             'postal_code' => fn() => $this->postal_code,
             'address' => fn() => $this->address,
@@ -40,7 +45,7 @@ class AddressResource extends JsonResource
             'updated_at_text' => fn() => $this->updatedAtText,
             'deleted_at' => fn() => $this->deleted_at,
             'deleted_at_text' => fn() => $this->deletedAtText,
-            'user' => fn() => $this->user ? new (config('callmeaf-user.model_resource'))($this->user,only: $this->only['!user'] ?? []) : null,
+            'addressable' => fn() => $addressable ? new (config('callmeaf-'. $addressableConfigName . '.model_resource'))($addressable,only: $this->only['!addressable'][$addressableClass] ?? []) : null,
             'province' => fn() => $this->province ? new (config('callmeaf-province.model_resource'))($this->province,only: $this->only['!province'] ?? []) : null,
         ],only: $this->only);
     }

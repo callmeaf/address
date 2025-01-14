@@ -19,6 +19,7 @@ use Callmeaf\Address\Http\Requests\V1\Api\AddressUpdateRequest;
 use Callmeaf\Address\Models\Address;
 use Callmeaf\Address\Services\V1\AddressService;
 use Callmeaf\Address\Utilities\V1\Api\Address\AddressResources;
+use Callmeaf\User\Services\V1\UserService;
 
 class AddressController extends ApiController
 {
@@ -61,8 +62,17 @@ class AddressController extends ApiController
         try {
             $resources = $this->addressResources->store();
             $data = $request->validated();
-            $address = $this->addressService->create(data: $data,events: [
-                AddressStored::class
+
+            $user = authUser(request: $request);
+            /**
+             * @var UserService $userService
+             */
+            $userService = app(config('callmeaf-user.service'));
+            if($user->isSuperAdminOrAdmin()) {
+                $user = $userService->where(column: 'id',valueOrOperation: $data['user_id'])->first(columns: ['id'])->getModel();
+            }
+            $address = $this->addressService->createAddressFor(model: $user,data: $data,events: [
+                AddressStored::class,
             ])->getModel(asResource: true,attributes: $resources->attributes(),relations: $resources->relations());
             return apiResponse([
                 'address' => $address,
@@ -139,9 +149,9 @@ class AddressController extends ApiController
     {
         try {
             $resources = $this->addressResources->destroy();
-            $address = $this->addressService->setModel($address)->delete()->getModel(asResource: true,attributes: $resources->attributes(),events: [
+            $address = $this->addressService->setModel($address)->delete(events: [
                 AddressDestroyed::class,
-            ]);
+            ])->getModel(asResource: true,attributes: $resources->attributes(),relations: $resources->relations());
             return apiResponse([
                 'address' => $address,
             ],__('callmeaf-base::v1.successful_deleted', [

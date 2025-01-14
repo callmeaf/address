@@ -25,8 +25,8 @@ class AddressSearcher implements SearcherInterface
         if($value = $filters->get('national_code')) {
             $query->where('national_code',$value);
         }
-        if($value = $filters->get('delivery_code')) {
-            $query->where('delivery_code',$value);
+        if($value = $filters->get('is_default')) {
+            $query->where('is_default',$value);
         }
         if($value = $filters->get('postal_code')) {
             $query->where('postal_code',$value);

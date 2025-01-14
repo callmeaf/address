@@ -7,6 +7,7 @@ return [
     'service' => \Callmeaf\Address\Services\V1\AddressService::class,
     'default_values' => [
         'status' => \Callmeaf\Address\Enums\AddressStatus::ACTIVE,
+        'is_default' => false,
     ],
     'events' => [
         \Callmeaf\Address\Events\AddressIndexed::class => [

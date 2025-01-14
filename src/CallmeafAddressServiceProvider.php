@@ -22,6 +22,7 @@ class CallmeafAddressServiceProvider extends ServiceProvider
     private const LANG_GROUP = 'callmeaf-address-lang';
     public function boot()
     {
+        require_once( __DIR__ . '/helpers.php');
         $this->registerConfig();
         $this->registerRoute();
         $this->registerMigration();

@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
+            $table->nullableMorphs('addressable');
+            $table->foreignIdFor(config('callmeaf-province.model'))->nullable()->constrained()->cascadeOnDelete();
             $table->string('status')->nullable();
             $table->string('type')->nullable();
-            $table->foreignIdFor(config('callmeaf-user.model'))->nullable()->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(config('callmeaf-province.model'))->nullable()->constrained()->cascadeOnDelete();
+            $table->boolean('is_default');
             $table->string('full_name')->nullable();
             $table->string('mobile')->nullable();
             $table->string('email')->nullable();
-            $table->string('delivery_code')->unique()->nullable();
             $table->string('national_code')->nullable();
             $table->string('postal_code')->nullable();
             $table->text('address')->nullable();

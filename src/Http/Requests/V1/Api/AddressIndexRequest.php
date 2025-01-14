@@ -24,7 +24,7 @@ class AddressIndexRequest extends FormRequest
         return validationManager(rules: [
             'full_name' => [],
             'mobile' => [],
-            'delivery_code' => [],
+            'is_default' => [],
             'national_code' => [],
             'postal_code' => [],
             'address' => [],

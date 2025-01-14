@@ -13,6 +13,7 @@ use Callmeaf\Base\Traits\HasStatus;
 use Callmeaf\Base\Traits\HasType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -22,12 +23,11 @@ class Address extends Model implements HasResponseTitles,HasEnum,HasMedia
     protected $fillable = [
         'status',
         'type',
-        'user_id',
+        'is_default',
         'province_id',
         'full_name',
         'mobile',
         'email',
-        'delivery_code',
         'national_code',
         'postal_code',
         'address'
@@ -36,11 +36,12 @@ class Address extends Model implements HasResponseTitles,HasEnum,HasMedia
     protected $casts = [
         'status' => AddressStatus::class,
         'type' => AddressType::class,
+        'is_default' => 'boolean'
     ];
 
-    public function user(): BelongsTo
+    public function addressable(): MorphTo
     {
-        return $this->belongsTo(config('callmeaf-user.model'));
+        return $this->morphTo();
     }
 
     public function province(): BelongsTo

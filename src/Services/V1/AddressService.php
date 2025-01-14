@@ -4,6 +4,8 @@ namespace Callmeaf\Address\Services\V1;
 
 use Callmeaf\Base\Services\V1\BaseService;
 use Callmeaf\Address\Services\V1\Contracts\AddressServiceInterface;
+use Callmeaf\Base\Traits\HasAddresses;
+use Callmeaf\User\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -22,4 +24,11 @@ class AddressService extends BaseService implements AddressServiceInterface
         $this->searcher = config('callmeaf-address.searcher');
     }
 
+    public function createAddressFor(Model $model, array $data = [],?array $events = []): self
+    {
+        $this->setModel(
+            model: $model->addresses()->create(attributes: $this->mergeData(data: $data))
+        );
+        return $this;
+    }
 }

@@ -11,7 +11,7 @@ class AddressFormRequestValidator extends FormRequestValidator
         return [
             'full_name' => false,
             'mobile' => false,
-            'delivery_code' => false,
+            'is_default' => false,
             'national_code' => false,
             'postal_code' => false,
             'address' => false,
@@ -23,6 +23,7 @@ class AddressFormRequestValidator extends FormRequestValidator
         $rules = [
             'status' => true,
             'type' => true,
+            'is_default' => false,
             'province_id' => true,
             'full_name' => false,
             'mobile' => false,
@@ -32,7 +33,7 @@ class AddressFormRequestValidator extends FormRequestValidator
             'address' => true,
         ];
 
-        if($this->request->user()?->isSuperAdminOrAdmin()) {
+        if(authUser(request: $this->request)?->isSuperAdminOrAdmin()) {
             $rules['user_id'] = true;
         }
 
@@ -49,6 +50,7 @@ class AddressFormRequestValidator extends FormRequestValidator
         $rules = [
             'status' => true,
             'type' => true,
+            'is_default' => false,
             'province_id' => true,
             'full_name' => false,
             'mobile' => false,
@@ -58,7 +60,7 @@ class AddressFormRequestValidator extends FormRequestValidator
             'address' => true,
         ];
 
-        if($this->request->user()?->isSuperAdminOrAdmin()) {
+        if(authUser(request: $this->request)?->isSuperAdminOrAdmin()) {
             $rules['user_id'] = true;
         }
 

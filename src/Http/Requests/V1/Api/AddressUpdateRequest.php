@@ -28,6 +28,7 @@ class AddressUpdateRequest extends FormRequest
         $rules = [
             'status' => [new Enum(AddressStatus::class)],
             'type' => [new Enum(AddressType::class)],
+            'is_default' => ['boolean'],
             'province_id' => [Rule::exists(config('callmeaf-province.model'),'id')],
             'full_name' => ['string','max:255'],
             'mobile' => ['digits:11'],
@@ -37,7 +38,7 @@ class AddressUpdateRequest extends FormRequest
             'address' => ['string','max:500'],
         ];
 
-        if($this->user()?->isSuperAdminOrAdmin()) {
+        if(authUser(request: $this)?->isSuperAdminOrAdmin()) {
             $rules['user_id'] = [Rule::exists(config('callmeaf-user.model'),'id')];
         }
 
